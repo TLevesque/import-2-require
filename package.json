@@ -1,0 +1,45 @@
+{
+    "name": "import-to-require",
+    "displayName": "import-to-require",
+    "description": "Convert ES6 module import syntax to ES5 require syntax",
+    "version": "0.0.1",
+    "publisher": "tlevesque",
+    "repository": "https://github.com/TLevesque/import-2-require.git",
+    "engines": {
+        "vscode": "^1.27.2"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.insertLogStatement"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.insertLogStatement",
+                "title": "Insert Log Statement"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "extension.insertLogStatement",
+                "key": "shift+ctrl+l",
+                "mac": "ctrl+alt+m",
+                "when": "editorTextFocus"
+            }
+        ]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.21",
+        "eslint": "^4.11.0",
+        "@types/node": "^8.10.25",
+        "@types/mocha": "^2.2.42"
+    }
+}
