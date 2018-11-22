@@ -5,8 +5,6 @@ Select the line (or lines) with the 'import' ES6 syntax and press ctrl+alt+m to 
 You can select multiple lines to modify several import lines at a time.<br />
 But doesn't support multi-cursors.
 
-Installation:
-`apm install import-to-require`
 
 ### Support those kinds of imports:
 
