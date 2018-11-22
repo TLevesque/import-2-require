@@ -25,7 +25,7 @@
         "keybindings": [
             {
                 "command": "extension.insertLogStatement",
-                "key": "shift+ctrl+l",
+                "key": "ctrl+alt+m",
                 "mac": "ctrl+alt+m",
                 "when": "editorTextFocus"
             }
