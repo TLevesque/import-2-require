@@ -1,65 +1,55 @@
-# javascript README
+# import-to-require package
 
-This is the README for your extension "javascript". After writing up a brief description, we recommend including the following sections.
+Select the line (or lines) with the 'import' ES6 syntax and press ctrl+alt+m to turn it into a line with 'require' ES5 syntax.
 
-## Features
+You can select multiple lines to modify several import lines at a time.<br />
+But doesn't support multi-cursors.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Installation:
+`apm install import-to-require`
 
-For example if there is an image subfolder under your extension project workspace:
+### Support those kinds of imports:
 
-\!\[feature X\]\(images/feature-x.png\)
+import moment from "moment";<br />
+=> const moment = require("moment");<br />
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+import React from "react";<br />
+=> const React = require("react");<br />
 
-## Requirements
+import text from "../../helpers/text";<br />
+=> const text = require("../../helpers/text");<br />
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+import Button from "../../elements/buttons/Button";<br />
+=> const Button = require("../../elements/buttons/Button");<br />
 
-## Extension Settings
+import { Container1 } from "next/app";<br />
+=> const Container1 = require("next/app").Container1;<br />
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+import { checkmark } from "../../elements/utils";<br />
+=> const checkmark = require("../../elements/utils").checkmark;<br />
 
-For example:
+import { IntlProvider, addLocaleData } from "react-intl";<br />
+=> const IntlProvider = require("react-intl").IntlProvider;<br />
+=> const addLocaleData = require("react-intl").addLocaleData;<br />
 
-This extension contributes the following settings:
+import { close as crossIcon } from "react-icons-kit/ionicons/close";<br />
+=> const crossIcon = require("react-icons-kit/ionicons/close").close;<br />
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+import { close as crossIcon, open as openIcon } from "react-icons-kit/ionicons/close";<br />
+=> const crossIcon = require("react-icons-kit/ionicons/close").close;<br />
+=> const openIcon = require("react-icons-kit/ionicons/close").open;<br />
 
-## Known Issues
+import App, { Container, connect, coon as alias } from "next/app";<br />
+=> const App = require(next/app);<br />
+=> const Container = require("next/app").Container;<br />
+=> const connect = require("next/app").connect;<br />
+=> const alias = require("next/app").coon;<br />
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+import {<br />
+compose,<br />
+withApollo,<br />
+gql<br />
+} from 'react-apollo';<br />
+=> const compose = require('react-apollo').compose;<br />
+=> const withApollo = require('react-apollo').withApollo;<br />
+=> const gql = require('react-apollo').gql;<br />
