@@ -203,11 +203,85 @@ const insertText = val => {
   });
 };
 
+function getAllExports(document, documentText) {
+  let exportStrings = [];
+
+  const exportRegex = /^export const /gm;
+  let match;
+  while ((match = exportRegex.exec(documentText))) {
+    let matchRange = new vscode.Range(
+      document.positionAt(match.index),
+      document.positionAt(match.index + match[0].length)
+    );
+    if (!matchRange.isEmpty) exportStrings.push(matchRange);
+  }
+  return exportStrings;
+}
+
+function getAllExportDefaults(document, documentText) {
+  let exportDefaultStrings = [];
+
+  const exportDefaultRegex = /^export default /gm;
+  let match;
+  while ((match = exportDefaultRegex.exec(documentText))) {
+    let matchRange = new vscode.Range(
+      document.positionAt(match.index),
+      document.positionAt(match.index + match[0].length)
+    );
+    if (!matchRange.isEmpty) exportDefaultStrings.push(matchRange);
+  }
+  return exportDefaultStrings;
+}
+
+function replaceAllFoundExports(exportStrings, exportDefaultStrings) {
+  const exportReplacement = "exports.";
+  const exportDefaultReplacement = "module.exports = ";
+  const editor = vscode.window.activeTextEditor;
+
+  if (exportStrings.length > 0) {
+    const exportStringList = Array.of(exportStrings)[0];
+    let counter = 0;
+    const convertString = (exportStringList, counter) => {
+      editor
+        .edit(editBuilder => {
+          const convertedExportString = Object.entries(
+            exportStringList[counter]
+          );
+          const start = convertedExportString[0][1];
+          const end = convertedExportString[1][1];
+          const range = new vscode.Range(start, end);
+          editBuilder.replace(range, exportReplacement);
+        })
+        .then(() => {
+          counter++;
+          if (counter < exportStringList.length) {
+            convertString(exportStringList, counter);
+          }
+        });
+    };
+    if (counter < exportStringList.length) {
+      convertString(exportStringList, counter);
+    }
+  }
+
+  if (exportDefaultStrings.length > 0) {
+    exportDefaultStrings.forEach(exportDefaultString => {
+      editor.edit(editBuilder => {
+        const range = new vscode.Range(
+          exportDefaultString[0],
+          exportDefaultString[1]
+        );
+        editBuilder.replace(range, exportDefaultReplacement);
+      });
+    });
+  }
+}
+
 function activate(context) {
   console.log('Congratulations, your extension "javascript" is now active!');
 
-  const insertLogStatement = vscode.commands.registerCommand(
-    "extension.insertLogStatement",
+  const replaceAllImports = vscode.commands.registerCommand(
+    "extension.replaceAllImports",
     () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
@@ -220,7 +294,38 @@ function activate(context) {
       insertText(text);
     }
   );
-  context.subscriptions.push(insertLogStatement);
+  context.subscriptions.push(replaceAllImports);
+
+  const replaceAllExports = vscode.commands.registerCommand(
+    "extension.replaceAllExports",
+    () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
+        return;
+      }
+
+      // const selection = editor.selection;
+      // const text = editor.document.getText(selection);
+
+      // insertText(text);
+
+      const document = editor.document;
+      const documentText = editor.document.getText();
+
+      // let workspaceEdit = new vscode.WorkspaceEdit();
+
+      const exportStrings = getAllExports(document, documentText);
+      const exportDefaultStrings = getAllExportDefaults(document, documentText);
+
+      replaceAllFoundExports(
+        // workspaceEdit,
+        // document.uri,
+        exportStrings,
+        exportDefaultStrings
+      );
+    }
+  );
+  context.subscriptions.push(replaceAllExports);
 }
 exports.activate = activate;
 
