@@ -53,6 +53,8 @@ gql<br />
 => const withApollo = require('react-apollo').withApollo;<br />
 => const gql = require('react-apollo').gql;<br />
 
+### Support those kinds of exports:
+
 export const notBinString = binString => { ... }<br />
 => exports.notBinString = binString => { ... }<br />
 
