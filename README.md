@@ -5,6 +5,7 @@ Select the line (or lines) with the 'import' ES6 syntax and press ctrl+alt+m to 
 You can select multiple lines to modify several import lines at a time.<br />
 But doesn't support multi-cursors.
 
+Convert "export" and "export default" from current file by pressing ctrl+alt+p without selecting anything. Press twice if you have export and export default in the same file.
 
 ### Support those kinds of imports:
 
@@ -51,3 +52,9 @@ gql<br />
 => const compose = require('react-apollo').compose;<br />
 => const withApollo = require('react-apollo').withApollo;<br />
 => const gql = require('react-apollo').gql;<br />
+
+export const notBinString = binString => { ... }<br />
+=> exports.notBinString = binString => { ... }<br />
+
+export default { ... }<br />
+=> module.exports = { ... }<br />
