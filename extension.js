@@ -234,10 +234,9 @@ function getAllExportDefaults(document, documentText) {
 }
 
 function replaceAllFoundExports(exportStrings, exportDefaultStrings) {
-  const exportReplacement = "exports.";
-  const exportDefaultReplacement = "module.exports = ";
   const editor = vscode.window.activeTextEditor;
 
+  const exportReplacement = "exports.";
   if (exportStrings.length > 0) {
     const exportStringList = Array.of(exportStrings)[0];
     let counter = 0;
@@ -264,16 +263,31 @@ function replaceAllFoundExports(exportStrings, exportDefaultStrings) {
     }
   }
 
+  const exportDefaultReplacement = "module.exports = ";
   if (exportDefaultStrings.length > 0) {
-    exportDefaultStrings.forEach(exportDefaultString => {
-      editor.edit(editBuilder => {
-        const range = new vscode.Range(
-          exportDefaultString[0],
-          exportDefaultString[1]
-        );
-        editBuilder.replace(range, exportDefaultReplacement);
-      });
-    });
+    const exportDefaultStringList = Array.of(exportDefaultStrings)[0];
+    let counterDefault = 0;
+    const convertString = (exportDefaultStringList, counterDefault) => {
+      editor
+        .edit(editBuilder => {
+          const convertedExportString = Object.entries(
+            exportDefaultStringList[counterDefault]
+          );
+          const start = convertedExportString[0][1];
+          const end = convertedExportString[1][1];
+          const range = new vscode.Range(start, end);
+          editBuilder.replace(range, exportDefaultReplacement);
+        })
+        .then(() => {
+          counterDefault++;
+          if (counterDefault < exportDefaultStringList.length) {
+            convertString(exportDefaultStringList, counterDefault);
+          }
+        });
+    };
+    if (counterDefault < exportDefaultStringList.length) {
+      convertString(exportDefaultStringList, counterDefault);
+    }
   }
 }
 
