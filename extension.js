@@ -304,25 +304,13 @@ function activate(context) {
         return;
       }
 
-      // const selection = editor.selection;
-      // const text = editor.document.getText(selection);
-
-      // insertText(text);
-
       const document = editor.document;
       const documentText = editor.document.getText();
-
-      // let workspaceEdit = new vscode.WorkspaceEdit();
 
       const exportStrings = getAllExports(document, documentText);
       const exportDefaultStrings = getAllExportDefaults(document, documentText);
 
-      replaceAllFoundExports(
-        // workspaceEdit,
-        // document.uri,
-        exportStrings,
-        exportDefaultStrings
-      );
+      replaceAllFoundExports(exportStrings, exportDefaultStrings);
     }
   );
   context.subscriptions.push(replaceAllExports);
