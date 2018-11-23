@@ -236,11 +236,11 @@ function getAllExportDefaults(document, documentText) {
 function replaceAllFoundExports(exportStrings, exportDefaultStrings) {
   const editor = vscode.window.activeTextEditor;
 
-  const exportReplacement = "exports.";
   if (exportStrings.length > 0) {
     const exportStringList = Array.of(exportStrings)[0];
     let counter = 0;
     const convertString = (exportStringList, counter) => {
+      const exportReplacement = "exports.";
       editor
         .edit(editBuilder => {
           const convertedExportString = Object.entries(
@@ -263,10 +263,10 @@ function replaceAllFoundExports(exportStrings, exportDefaultStrings) {
     }
   }
 
-  const exportDefaultReplacement = "module.exports = ";
   if (exportDefaultStrings.length > 0) {
     const exportDefaultStringList = Array.of(exportDefaultStrings)[0];
     let counterDefault = 0;
+    const exportDefaultReplacement = "module.exports = ";
     const convertString = (exportDefaultStringList, counterDefault) => {
       editor
         .edit(editBuilder => {
