@@ -53,7 +53,6 @@ const extractName = string => {
 };
 
 const createRequireString = string => {
-  if (string.length === 0) return;
   const path = extractPath(string);
   const name = extractName(string);
 
@@ -152,7 +151,12 @@ const createRequireString = string => {
     path &&
     path.match(/\.\//i)
   ) {
-    return `const ${name} = require(${path});`;
+    if (name.includes("* as")) {
+      const modifiedName = name.replace("* as", "").trim();
+      return `const ${modifiedName} = require(${path});`;
+    } else {
+      return `const ${name} = require(${path});`;
+    }
   }
 
   return `const ${name} = require(${path});`;
