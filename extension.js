@@ -82,7 +82,7 @@ const createRequireString = string => {
         ? `const ${extraName} = require(${path});\n`
         : "";
       names.forEach((name, i) => {
-        if (name.includes("as")) {
+        if (name.includes(" as ")) {
           const [originalName, newName] = name
             .split(" as ")
             .map(name => name.trim());
@@ -101,9 +101,9 @@ const createRequireString = string => {
       });
       return returnedString;
     } else {
-      if (nameSring.includes("as")) {
+      if (nameSring.includes(" as ")) {
         const [originalName, newName] = nameSring
-          .split("as")
+          .split(" as ")
           .map(name => name.trim());
         return extraName
           ? `const ${extraName} = require(${path});\nconst ${newName} = require(${path}).${originalName};`
@@ -151,8 +151,8 @@ const createRequireString = string => {
     path &&
     path.match(/\.\//i)
   ) {
-    if (name.includes("* as")) {
-      const modifiedName = name.replace("* as", "").trim();
+    if (name.includes(" * as ")) {
+      const modifiedName = name.replace(" * as ", "").trim();
       return `const ${modifiedName} = require(${path});`;
     } else {
       return `const ${name} = require(${path});`;
@@ -221,7 +221,7 @@ function getAllExports(document, documentText) {
 function getAllExportDefaults(document, documentText) {
   let exportDefaultStrings = [];
 
-  const exportDefaultRegex = /^export default /gm;
+  const exportDefaultRegex = /^export default |^export /gm;
   let match;
   while ((match = exportDefaultRegex.exec(documentText))) {
     let matchRange = new vscode.Range(
@@ -292,8 +292,6 @@ function replaceAllFoundExports(exportStrings, exportDefaultStrings) {
 }
 
 function activate(context) {
-  console.log('Congratulations, your extension "javascript" is now active!');
-
   const replaceAllImports = vscode.commands.registerCommand(
     "extension.replaceAllImports",
     () => {
