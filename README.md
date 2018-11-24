@@ -60,3 +60,6 @@ export const notBinString = binString => { ... }<br />
 
 export default { ... }<br />
 => module.exports = { ... }<br />
+
+export { Appointment, AppointmentTC };<br />
+=> module.exports = { Appointment, AppointmentTC };<br />
