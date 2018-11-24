@@ -2,7 +2,7 @@
   "name": "import-to-require",
   "displayName": "Import To Require Syntax",
   "description": "Convert ES6 module import syntax to ES5 require syntax",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publisher": "tlevesque",
   "repository": "https://github.com/TLevesque/import-2-require.git",
   "engines": {
