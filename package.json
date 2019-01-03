@@ -20,11 +20,11 @@
     "commands": [
       {
         "command": "extension.replaceAllImports",
-        "title": "Insert Log Statement"
+        "title": "Replace 'import' with 'require'"
       },
       {
         "command": "extension.replaceAllExports",
-        "title": "Insert Log Statement"
+        "title": "Replace 'export' with CommonJS export"
       }
     ],
     "keybindings": [
